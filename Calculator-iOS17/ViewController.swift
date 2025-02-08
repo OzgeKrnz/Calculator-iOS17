@@ -7,20 +7,24 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController,CalculatorViewDelegate {
     
     let calculatorView = CalculatorView()
     
+
     override func loadView() {
         view = calculatorView
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        calculatorView.delegate = self
         
     }
     
+    func didTappedButton(_ title: String) {
+        print("Basıldı: \(title)")
+    }
 
 }
 

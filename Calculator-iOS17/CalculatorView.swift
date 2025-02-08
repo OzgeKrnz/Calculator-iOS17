@@ -6,7 +6,14 @@
 //
 
 import UIKit
+
+protocol CalculatorViewDelegate: AnyObject{
+    func didTappedButton(_ title:String)
+}
+
 class CalculatorView: UIView{
+    weak var delegate: CalculatorViewDelegate?
+    
     var stackView = UIStackView()
     var rowStack = UIStackView()
     
@@ -71,11 +78,13 @@ class CalculatorView: UIView{
         
         // satırları ayarlama
         rowStack.axis = .horizontal
-        rowStack.spacing = 20
+        rowStack.spacing = 10
         rowStack.distribution = .fillEqually
         
         for (index ,buttonTitle) in buttons.enumerated() {
             let button = createButton(title: buttonTitle)
+            button.addTarget(self, action: #selector(buttonTapped(_:)), for: .touchUpInside)
+
             rowStack.addArrangedSubview(button)
             
             if (index + 1) % 4 == 0 {
@@ -110,8 +119,15 @@ class CalculatorView: UIView{
         button.backgroundColor = buttonColor
         button.layer.cornerRadius = 30
         
+        
         return button
         
+    }
+    
+    
+    @objc func buttonTapped(_ sender: UIButton){
+        guard let title = sender.currentTitle else{return}
+        delegate?.didTappedButton(title)
     }
     
  
