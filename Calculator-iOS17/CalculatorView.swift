@@ -14,6 +14,8 @@ protocol CalculatorViewDelegate: AnyObject{
 class CalculatorView: UIView{
     weak var delegate: CalculatorViewDelegate?
     
+    let model = CalculatorModel()
+    
     var stackView = UIStackView()
     var rowStack = UIStackView()
     
@@ -128,6 +130,35 @@ class CalculatorView: UIView{
     @objc func buttonTapped(_ sender: UIButton){
         guard let title = sender.currentTitle else{return}
         delegate?.didTappedButton(title)
+        
+        
+        if ["0","1","2","3","4","5","6","7","8","9"].contains(title){
+            model.inputNumber(title)
+        } else if ["+", "-", "×", "÷"].contains(title){
+            model.inputOperation(title)
+        }else if title == "=" {
+            model.currentNumber = model.calcResult()
+            model.storedNum = ""
+            model.operation = nil
+        }
+        else if ["AC"].contains(title){
+            model.clear()
+            displayLabel.text = "0"
+        }
+        
+        updateDisplay()
+        
+        
+        
+    }
+    
+    private func updateDisplay(){
+        if let operation = model.operation{
+            displayLabel.text = "\(model.storedNum) \(operation) \(model.currentNumber)"
+            
+        }else{
+            displayLabel.text = model.currentNumber
+        }
     }
     
  

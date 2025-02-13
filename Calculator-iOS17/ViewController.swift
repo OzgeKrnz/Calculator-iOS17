@@ -10,6 +10,7 @@ import UIKit
 class ViewController: UIViewController,CalculatorViewDelegate {
     
     let calculatorView = CalculatorView()
+    let calculatorModel = CalculatorModel()
     
 
     override func loadView() {
@@ -24,7 +25,9 @@ class ViewController: UIViewController,CalculatorViewDelegate {
     
     func didTappedButton(_ title: String) {
         print("Basıldı: \(title)")
+        calculatorModel.inputNumber(title)
     }
+    
 
 }
 
