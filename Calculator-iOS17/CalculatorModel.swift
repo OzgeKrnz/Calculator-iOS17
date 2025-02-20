@@ -52,7 +52,7 @@ class CalculatorModel{
         case "×":
             return String(stored * current)
         case "÷":
-            return current == 0 ? "Sıfıra bölünmez" : String(stored / current)
+            return current == 0 ? "Sıfıra bölünmez" :String(Float(stored) / Float(current))
         default:
             return "hata"
         }
